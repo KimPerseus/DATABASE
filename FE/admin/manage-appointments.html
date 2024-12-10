@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý Lịch Khám</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Quản lý Lịch Khám</h1>
+    </header>
+    <main>
+        <button onclick="loadAppointments()">Tải lịch khám</button>
+        <table id="appointment-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Bệnh Nhân</th>
+                    <th>Ngày</th>
+                    <th>Giờ</th>
+                    <th>Trạng Thái</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script>
+        async function loadAppointments() {
+            const response = await fetch('/api/appointments');
+            const appointments = await response.json();
+            const tbody = document.querySelector('#appointment-table tbody');
+            tbody.innerHTML = '';
+            appointments.forEach(appointment => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${appointment.id}</td>
+                        <td>${appointment.name}</td>
+                        <td>${appointment.date}</td>
+                        <td>${appointment.time}</td>
+                        <td>${appointment.status}</td>
+                        <td><button onclick="deleteAppointment(${appointment.id})">Hủy</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function deleteAppointment(id) {
+            const response = await fetch(`/api/appointments/${id}`, { method: 'DELETE' });
+            if (response.ok) {
+                loadAppointments();
+                alert('Hủy lịch khám thành công!');
+            }
+        }
+    </script>
+</body>
+</html>

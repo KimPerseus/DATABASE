@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nhận Đánh Giá</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Nhận Đánh Giá</h1>
+    </header>
+    <main>
+        <button onclick="loadFeedback()">Tải Đánh Giá</button>
+        <table id="feedback-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên Người Đánh Giá</th>
+                    <th>Email</th>
+                    <th>Nội Dung</th>
+                    <th>Thời Gian</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script>
+        async function loadFeedback() {
+            const response = await fetch('/api/feedback');
+            const feedbacks = await response.json();
+            const tbody = document.querySelector('#feedback-table tbody');
+            tbody.innerHTML = '';
+            feedbacks.forEach(feedback => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${feedback.id}</td>
+                        <td>${feedback.name}</td>
+                        <td>${feedback.email}</td>
+                        <td>${feedback.content}</td>
+                        <td>${feedback.timestamp}</td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
