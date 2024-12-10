@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Hóa Đơn</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Thanh Toán Hóa Đơn</h1>
+    </header>
+    <main>
+        <form id="payment-form">
+            <label for="bill-id">ID Hóa Đơn:</label>
+            <input type="text" id="bill-id" placeholder="Nhập ID Hóa Đơn" required>
+            
+            <label for="patient-name">Tên Bệnh Nhân:</label>
+            <input type="text" id="patient-name" placeholder="Nhập tên bệnh nhân" required>
+            
+            <label for="amount">Số Tiền:</label>
+            <input type="number" id="amount" placeholder="Nhập số tiền" required>
+
+            <label for="payment-method">Phương Thức Thanh Toán:</label>
+            <select id="payment-method">
+                <option value="credit-card">Thẻ tín dụng</option>
+                <option value="bank-transfer">Chuyển khoản ngân hàng</option>
+                <option value="paypal">PayPal</option>
+            </select>
+
+            <button type="submit">Thanh Toán</button>
+        </form>
+
+        <p id="payment-message"></p>
+    </main>
+
+    <script>
+        document.getElementById('payment-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            // Thu thập dữ liệu từ form
+            const billData = {
+                billId: document.getElementById('bill-id').value,
+                patientName: document.getElementById('patient-name').value,
+                amount: document.getElementById('amount').value,
+                paymentMethod: document.getElementById('payment-method').value
+            };
+
+            // Gửi dữ liệu thanh toán đến API
+            const response = await fetch('/api/payments', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(billData)
+            });
+
+            // Xử lý phản hồi
+            const responseData = await response.json();
+            if (response.ok) {
+                document.getElementById('payment-message').textContent = `Thanh toán thành công! Hóa đơn ID: ${billData.billId}`;
+                document.getElementById('payment-message').style.color = 'green';
+            } else {
+                document.getElementById('payment-message').textContent = `Có lỗi xảy ra: ${responseData.message}`;
+                document.getElementById('payment-message').style.color = 'red';
+            }
+
+            // Reset form sau khi gửi
+            document.getElementById('payment-form').reset();
+        });
+    </script>
+</body>
+</html>

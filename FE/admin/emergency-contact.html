@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ Khẩn Cấp</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Quản lý Liên Hệ Khẩn Cấp</h1>
+    </header>
+    <main>
+        <button onclick="loadEmergencyContacts()">Tải Liên Hệ</button>
+        <table id="emergency-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Số Điện Thoại</th>
+                    <th>Nội Dung</th>
+                    <th>Thời Gian</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </main>
+    <script>
+        async function loadEmergencyContacts() {
+            const response = await fetch('/api/emergency');
+            const contacts = await response.json();
+            const tbody = document.querySelector('#emergency-table tbody');
+            tbody.innerHTML = '';
+            contacts.forEach(contact => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${contact.id}</td>
+                        <td>${contact.name}</td>
+                        <td>${contact.phone}</td>
+                        <td>${contact.message}</td>
+                        <td>${contact.timestamp}</td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>

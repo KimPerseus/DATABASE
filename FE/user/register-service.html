@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký Dịch Vụ</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Đăng Ký Dịch Vụ</h1>
+    </header>
+    <main>
+        <form id="service-form">
+            <input type="text" id="name" placeholder="Tên của bạn" required>
+            <input type="text" id="service" placeholder="Dịch vụ cần đăng ký" required>
+            <input type="date" id="date" required>
+            <button type="submit">Đăng ký</button>
+        </form>
+        <p id="response-message"></p>
+    </main>
+    <script>
+        document.getElementById('service-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const service = {
+                name: document.getElementById('name').value,
+                service: document.getElementById('service').value,
+                date: document.getElementById('date').value
+            };
+            const response = await fetch('/api/services', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(service)
+            });
+            if (response.ok) {
+                document.getElementById('response-message').textContent = 'Đăng ký dịch vụ thành công!';
+                document.getElementById('response-message').style.color = 'green';
+            } else {
+                document.getElementById('response-message').textContent = 'Có lỗi xảy ra.';
+                document.getElementById('response-message').style.color = 'red';
+            }
+        });
+    </script>
+</body>
+</html>

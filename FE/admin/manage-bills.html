@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Hóa Đơn</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            background-color: #008cba;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        main {
+            padding: 20px;
+        }
+        .table-container {
+            margin-top: 30px;
+            overflow-x: auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #008cba;
+            color: white;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+        }
+        .view-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .edit-btn {
+            background-color: #FFA500;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .action-btn:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Quản Lý Hóa Đơn</h1>
+    </header>
+    <main>
+        <h2>Danh Sách Hóa Đơn</h2>
+        
+        <!-- Bảng hiển thị hóa đơn -->
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID Hóa Đơn</th>
+                        <th>Tên Bệnh Nhân</th>
+                        <th>Dịch Vụ</th>
+                        <th>Số Tiền</th>
+                        <th>Ngày Thanh Toán</th>
+                        <th>Hành Động</th>
+                    </tr>
+                </thead>
+                <tbody id="bills-table-body">
+                    <!-- Dữ liệu hóa đơn sẽ được thêm vào đây bằng JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2024 Hospital Management System</p>
+    </footer>
+
+    <script>
+        // Mẫu dữ liệu hóa đơn (có thể thay thế bằng dữ liệu từ cơ sở dữ liệu)
+        const bills = [
+            { id: 1, patientName: 'Nguyễn Văn A', service: 'Khám Da', amount: 500000, date: '2024-12-01' },
+            { id: 2, patientName: 'Trần Thị B', service: 'Điều Trị Mụn', amount: 300000, date: '2024-12-05' },
+            { id: 3, patientName: 'Lê Hoàng C', service: 'Chăm Sóc Da', amount: 200000, date: '2024-12-07' }
+        ];
+
+        // Hàm hiển thị danh sách hóa đơn
+        function displayBills() {
+            const tableBody = document.getElementById('bills-table-body');
+            tableBody.innerHTML = ''; // Xóa dữ liệu hiện tại trong bảng
+
+            bills.forEach(bill => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${bill.id}</td>
+                    <td>${bill.patientName}</td>
+                    <td>${bill.service}</td>
+                    <td>${bill.amount.toLocaleString()} VND</td>
+                    <td>${bill.date}</td>
+                    <td>
+                        <button class="action-btn view-btn" onclick="viewBill(${bill.id})">Xem</button>
+                        <button class="action-btn edit-btn" onclick="editBill(${bill.id})">Sửa</button>
+                        <button class="action-btn delete-btn" onclick="deleteBill(${bill.id})">Xóa</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        // Hàm xem chi tiết hóa đơn
+        function viewBill(billId) {
+            alert(`Xem chi tiết hóa đơn ID: ${billId}`);
+            // Chuyển hướng hoặc hiển thị chi tiết hóa đơn thực tế ở đây
+        }
+
+        // Hàm sửa hóa đơn
+        function editBill(billId) {
+            alert(`Sửa hóa đơn ID: ${billId}`);
+            // Chuyển hướng hoặc hiển thị form chỉnh sửa hóa đơn thực tế ở đây
+        }
+
+        // Hàm xóa hóa đơn
+        function deleteBill(billId) {
+            const index = bills.findIndex(bill => bill.id === billId);
+            if (index !== -1) {
+                bills.splice(index, 1); // Xóa hóa đơn khỏi danh sách
+                displayBills(); // Cập nhật lại danh sách
+                alert(`Đã xóa hóa đơn ID: ${billId}`);
+            }
+        }
+
+        // Hiển thị danh sách hóa đơn khi trang được tải
+        window.onload = displayBills;
+    </script>
+</body>
+</html>
