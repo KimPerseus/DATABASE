@@ -1,0 +1,38 @@
+/* Tạo một container bao ngoài với flexbox */
+.login-container {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(to right, #6a11cb, #2575fc); /* Nền gradient */
+  justify-content: flex-start; /* Logo nằm bên trái */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+/* Logo */
+.logo img {
+  width: 250px;
+  height: auto;
+  margin-left: 300px; /* Khoảng cách từ bên trái */
+}
+
+/* Khung đăng nhập */
+.login-form {
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: 300px; /* Khoảng cách bên phải */
+  z-index: 1;
+}
+
+.card {
+  border-radius: 8px; /* Bo góc card */
+}
+
+.card-header {
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px 8px 0 0;
+}
+
+.card-body {
+  padding: 20px;
+}

@@ -1,4 +1,5 @@
 const { getPrinters } = require("../models/checkModel");
+const { addPersonnel } = require("../models/checkPersonnel");
 
 // Controller lấy danh sách máy in
 const getPrintersController = async (req, res) => {
@@ -16,4 +17,13 @@ const getPrintersController = async (req, res) => {
   }
 };
 
-module.exports = { getPrintersController };
+const addPersonnelController = async (req, res) => {
+  try {
+    const message = await addPersonnel(); // Lấy dữ liệu từ model
+    return res.status(200).json(message);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { getPrintersController, addPersonnelController };

@@ -8,13 +8,13 @@ const checkRoutes = require("./routes/checkRoutes");
 // Import thêm các routes khác nếu cần
 
 const app = express();
-const port = process.env.PORT || 9999;
+const port = process.env.PORT || 5001;
 
 app.use(bodyParser.json());
 app.use(cors());  
 
 // Sử dụng các routes
-app.use("/api/check", checkRoutes);
+app.use("/api", checkRoutes);
 // Thêm các routes khác tương ứng
 
 
